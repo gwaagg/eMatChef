@@ -1,0 +1,32 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Start All",
+      "dependsOn": [
+        "Docker Compose Up",
+        "Install Composer Packages",
+        "Run Migrations"
+      ]
+    },
+    {
+      "label": "Docker Compose Up",
+      "type": "shell",
+      "command": "docker-compose up --build -d",
+      "problemMatcher": []
+    },
+    {
+      "label": "Install Composer Packages",
+      "type": "shell",
+      "command": "docker exec ematchef_backend composer install",
+      "problemMatcher": []
+    },
+    {
+      "label": "Run Migrations",
+      "type": "shell",
+      "command": "docker exec ematchef_backend php bin/console doctrine:migrations:migrate --no-interaction",
+      "problemMatcher": [],
+      "dependsOn": ["Install Composer Packages"]
+    }
+  ]
+}

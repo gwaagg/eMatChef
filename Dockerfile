@@ -1,15 +1,15 @@
 FROM php:8.2-cli
 
-WORKDIR /app
-
 RUN apt-get update && apt-get install -y \
-    git unzip zip curl libpq-dev libonig-dev \
-    && docker-php-ext-install pdo pdo_pgsql
+    git zip unzip curl libzip-dev libonig-dev libxml2-dev \
+    default-mysql-client \
+    && docker-php-ext-install pdo_mysql zip
 
-COPY . /app
+# Composer hinzufügen
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer
+# Symfony CLI installieren
+RUN curl -sS https://get.symfony.com/cli/installer | bash \
+    && mv /root/.symfony*/bin/symfony /usr/local/bin/symfony
 
-RUN composer install
-
-CMD ["php", "-S", "0.0.0.0:8000", "-t", "public"]
+WORKDIR /app
