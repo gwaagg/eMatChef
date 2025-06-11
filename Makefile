@@ -1,4 +1,4 @@
-# 🔧 Projekt-Setup für eMatCef
+# 🔧 Projekt-Setup für eMatChef
 
 start:
 	docker-compose up --build

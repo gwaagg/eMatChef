@@ -1,14 +1,30 @@
-FROM php:8.2-cli
+FROM php:8.3-cli
 
+# Systemabhängigkeiten installieren
 RUN apt-get update && apt-get install -y \
-    git zip unzip curl libzip-dev libonig-dev libxml2-dev \
+    git \
+    unzip \
+    zip \
+    curl \
+    libicu-dev \
+    libpq-dev \
+    libonig-dev \
+    libzip-dev \
+    libxml2-dev \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libmcrypt-dev \
+    libxslt1-dev \
+    libssl-dev \
     default-mysql-client \
-    && docker-php-ext-install pdo_mysql zip
+    && docker-php-ext-install intl pdo pdo_mysql zip opcache
 
-# Symfony CLI hinzufügen
-RUN curl -sS https://get.symfony.com/cli/installer | bash && \
-    mv /root/.symfony*/bin/symfony /usr/local/bin/symfony
+# Composer installieren
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
-
+# Arbeitsverzeichnis
 WORKDIR /app
+
+# Default Command für dev-server
+CMD ["php", "-S", "0.0.0.0:8000", "-t", "public"]

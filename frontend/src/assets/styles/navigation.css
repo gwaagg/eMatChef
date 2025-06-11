@@ -1,0 +1,112 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Container */
+.layout-root {
+  @apply flex flex-row min-h-screen relative;
+}
+.content-wrapper {
+  @apply flex-1 flex flex-col transition-all duration-300;
+}
+.admin-sidebar {
+  @apply hidden md960:block w-64 bg-gray-100 h-screen p-4 shadow-inner;
+}
+.desktop-header {
+  @apply hidden md960:flex justify-between items-center px-6 h-16 bg-navyblue border-b shadow;
+}
+.header-left {
+  @apply flex items-center gap-6;
+}
+.desktop-nav {
+  @apply flex gap-4;
+}
+.desktop-link {
+  @apply block px-4 py-2 rounded-md transition-colors duration-150 text-white cursor-pointer;
+}
+.desktop-inactive {
+  @apply bg-navyblue text-white;
+}
+.desktop-link:hover {
+  @apply bg-blue-900 text-white;
+}
+.desktop-active {
+  @apply bg-blue-700 text-white font-semibold;
+}
+.desktop-nav ul {
+  @apply flex gap-2;
+}
+.logo {
+  @apply text-xl font-bold;
+}
+.user-dropdown {
+  @apply relative;
+}
+.user-dropdown button {
+  @apply flex items-center gap-2 hover:text-white;
+}
+.dropdown-box {
+  @apply absolute right-0 mt-2 w-40 bg-white border rounded shadow-md z-50;
+}
+.dropdown-box a {
+  @apply block px-4 py-2 hover:bg-gray-100;
+}
+.main-content {
+  @apply transition-all duration-300 p-4;
+}
+/* Admin-Flyout-Panel unter dem Header */
+.admin-flyout {
+  @apply absolute top-16 left-0 z-30; /* direkt unter dem 64px Header */
+}
+/* Admin-Menü-Stil */
+.admin-panel {
+  @apply hidden md960:block fixed top-16 left-0 w-64 h-[calc(100vh-4rem)] bg-gray-100 p-4 shadow-inner z-20;
+}
+.admin-panel h2 {
+  @apply text-lg font-semibold mb-4;
+}
+.admin-panel ul {
+  @apply space-y-2;
+}
+.admin-panel a {
+  @apply block px-2 py-1 rounded hover:bg-gray-200;
+}
+/* Mobile Navi */
+.nav-mobile {
+  @apply fixed bottom-0 left-0 right-0 bg-navyblue border-t shadow flex h-16 md960:hidden;
+}
+.nav-button {
+  @apply flex flex-col items-center justify-center flex-1;
+}
+.nav-active {
+  @apply text-white;
+}
+.nav-inactive {
+  @apply text-gray-400 hover:text-gray-200;
+}
+.nav-icon {
+  @apply w-6 h-6;
+}
+.nav-label {
+  @apply text-xs;
+}
+
+/* Mobile Sidebar */
+.mobile-overlay {
+  @apply fixed inset-0 bg-black/50 z-40;
+}
+.mobile-sidebar {
+  @apply fixed top-0 right-0 w-64 h-full bg-white shadow-lg z-50 p-4;
+}
+.mobile-sidebar ul {
+  @apply space-y-2;
+}
+.mobile-sidebar a {
+  @apply block p-2 hover:bg-gray-100;
+}
+.section-title {
+  @apply font-semibold text-blue-600;
+}
+.close-button {
+  @apply block w-full text-left p-2 text-red-500 hover:bg-red-100;
+}

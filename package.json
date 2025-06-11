@@ -1,0 +1,21 @@
+{
+  "name": "ematchef",
+  "version": "1.0.0",
+  "description": "eMatChef ist eine Webapplikation, mit welcher man die Materialverwaltung im Verein einfacher Gestalten kann.\r Hauptfunktionen\r - Artikel Erfassen (Wieviel Bild QR code)\r - Artikel auf Camp/Lager buchen\r - Materiallisten von eCamp importieren\r - Budget / Amortisation Berechnen\r - Repraturaufträge erstellen\r - Materialverleih / Rechnung Generieren\r Addons",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.9.0",
+    "vue": "^3.5.16"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.4",
+    "tailwindcss": "^4.1.8"
+  }
+}
