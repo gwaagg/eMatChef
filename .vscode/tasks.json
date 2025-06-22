@@ -4,29 +4,47 @@
     {
       "label": "Start All",
       "dependsOn": [
-        "Docker Compose Up",
-        "Install Composer Packages",
-        "Run Migrations"
+        "🟢 Docker: Start backend, frontend & db",
+        "🔁 Composer Install (Backend)",
+        "⚙️ DB Migrate"
       ]
     },
     {
-      "label": "Docker Compose Up",
+      "label": "🟢 Docker: Start backend, frontend & db",
       "type": "shell",
-      "command": "docker-compose up --build -d",
+      "command": "docker-compose up -d --build",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
       "problemMatcher": []
     },
     {
-      "label": "Install Composer Packages",
+      "label": "🔁 Composer Install (Backend)",
       "type": "shell",
-      "command": "docker exec ematchef_backend composer install",
+      "command": "docker-compose exec backend composer install",
       "problemMatcher": []
     },
     {
-      "label": "Run Migrations",
+      "label": "⚙️ DB Migrate",
       "type": "shell",
-      "command": "docker exec ematchef_backend php bin/console doctrine:migrations:migrate --no-interaction",
+      "command": "docker-compose exec backend php bin/console doctrine:migrations:migrate --no-interaction",
+      "problemMatcher": []
+    },
+    {
+      "label": "🌱 Load Fixtures",
+      "type": "shell",
+      "command": "docker-compose exec backend php bin/console doctrine:fixtures:load --no-interaction",
+      "problemMatcher": []
+    },
+    {
+      "label": "npm: build - backend",
+      "type": "npm",
+      "script": "build",
+      "path": "backend",
+      "group": "none",
       "problemMatcher": [],
-      "dependsOn": ["Install Composer Packages"]
+      "detail": "encore production --progress"
     }
   ]
 }

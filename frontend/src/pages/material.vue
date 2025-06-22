@@ -1,6 +1,16 @@
+<script setup>
+import ItemList from '../components/ItemList.vue'
+
+import { ref } from 'vue'
+const itemListRef = ref()
+
+const onItemAdded = () => {
+  itemListRef.value?.loadItems()
+}
+</script>
 <template>
   <div>
-    <h1 class="text-2xl font-bold mb-4">Material</h1>
-    <p>Hier verwaltest du dein Material.</p>
+    <ItemList ref="itemListRef" />
   </div>
+  
 </template>

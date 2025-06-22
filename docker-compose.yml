@@ -10,8 +10,7 @@ services:
     depends_on:
       - db
     command: php -S 0.0.0.0:8000 -t public
-    entrypoint: sh -c "composer install && php bin/console doctrine:migrations:migrate --no-interaction && php -S 0.0.0.0:8000 -t public"
-
+    
 
   frontend:
     build:
@@ -34,8 +33,16 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: ematchef
+      MYSQL_USER: ematchef
+      MYSQL_PASSWORD: ematchef
     volumes:
       - db-data:/var/lib/mysql
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
 
 volumes:
   db-data:
