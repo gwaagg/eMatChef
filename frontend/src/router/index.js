@@ -19,10 +19,6 @@ const routes = [
   {
     path: '/',
     component: DefaultLayout,
-    beforeEnter: (to, from, next) => {
-      if (!isAuthenticated()) return next('/login')
-      next()
-    },
     children: [
       { path: '', redirect: '/material' },
       { path: 'material', name: 'material', component: Material },
@@ -36,6 +32,15 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+})
+router.beforeEach((to, from, next) => {
+  const isLoggedIn = !!localStorage.getItem('jwt')
+
+  if (to.path !== '/login' && !isLoggedIn) {
+    next('/login')
+  } else {
+    next()
+  }
 })
 
 export default router

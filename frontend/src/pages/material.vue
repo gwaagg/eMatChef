@@ -1,16 +1,15 @@
 <script setup>
-import ItemList from '../components/ItemList.vue'
-
 import { ref } from 'vue'
-const itemListRef = ref()
+import ItemList from '@/components/ItemList.vue'
+const itemListRef = ref(null)
 
-const onItemAdded = () => {
-  itemListRef.value?.loadItems()
+const reloadList = () => {
+  itemListRef.value?.loadItems?.()
 }
 </script>
+
 <template>
-  <div>
+  <div class="p-6">
     <ItemList ref="itemListRef" />
   </div>
-  
 </template>

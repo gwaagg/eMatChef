@@ -21,7 +21,7 @@
       <button @click="toggleDropdown">{{ username }}</button>
       <div v-if="dropdownOpen" class="dropdown-box">
         <router-link to="/profil">Profil</router-link>
-        <a href="#" @click.prevent="logout">Logout</a>
+        <button @click="logout" class="bg-red-500 px-3 py-1 rounded hover:bg-red-600">Logout</button>
       </div>
     </div>
   </header>
@@ -39,7 +39,7 @@ const menuItems = [
   { label: 'Material', route: '/material' },
   { label: 'Bestellung', route: '/bestellung' },
   { label: 'Buchhaltung', route: '/buchhaltung' },
-  { label: 'Admin', route: '/admin' }
+  { label: 'Einstellungen', route: '/admin' }
 ]
 
 const isActive = (item) => route.path.startsWith(item.route)
@@ -48,8 +48,9 @@ function toggleDropdown() {
   dropdownOpen.value = !dropdownOpen.value
 }
 
-function logout() {
-  console.log('Logout')
+const logout = () => {
+  localStorage.removeItem('jwt')
+  router.push('/login')
 }
 
 // Optional: Dropdown automatisch schließen bei Route-Wechsel
