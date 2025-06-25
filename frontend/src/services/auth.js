@@ -1,19 +1,24 @@
 import apiClient from '@/services/apiClient'
+// src/services/auth.js
+import jwtDecode from 'jwt-decode'
 
-export async function login(email, password) {
-  const response = await apiClient.post('/api/login', { email, password })
-  const token = response.data.token
-  localStorage.setItem('token', token)
-  apiClient.defaults.headers.common['Authorization'] = `Bearer ${token}`
-  console.log('Token gespeichert:', token)
-}
+export const login = async (email, password) => {
+  const res = await fetch(import.meta.env.VITE_API_BASE_URL + '/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password }) // ← kein username!
+  })
 
-export async function fetchUser() {
-  try {
-    const response = await apiClient.get('/api/me')
-    return response.data.user
-  } catch (error) {
-    console.error('Fehler beim Laden des Benutzers:', error)
-    throw new Error('Fehler beim Laden des Benutzers')
+  if (!res.ok) {
+    const errorText = await res.text()
+    throw new Error(`Login fehlgeschlagen: ${res.status} ${errorText}`)
   }
+
+  const data = await res.json()
+  localStorage.setItem('jwt', data.token)
+  console.log('Token gespeichert:', data.token)
+
+  // Token direkt auslesen und orgCode extrahieren
+  const decoded = jwtDecode(data.token)
+  return decoded // enthält u.a. orgCode und orgId
 }

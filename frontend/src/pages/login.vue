@@ -24,19 +24,21 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { login, fetchUser } from '@/services/auth'
+import { login } from '@/services/auth'
 
 const email = ref('')
 const password = ref('')
 const router = useRouter()
 
 const doLogin = async () => {
-  console.log('Login ausgelöst') // ← Debug-Ausgabe
   try {
-    await login(email.value, password.value)  // ⬅ 1. Login + JWT speichern
-    const user = await fetchUser()            // ⬅ 2. Benutzer + orgCode holen
+    const userData = await login(email.value, password.value) // ⬅ enthält orgCode
+    const orgCode = userData.orgCode
 
-    const orgCode = user.organisation.orgCode
+    if (!orgCode) {
+      throw new Error('orgCode fehlt im Token')
+    }
+
     router.push(`/${orgCode}/material`)
   } catch (err) {
     console.error('Login fehlgeschlagen:', err)
