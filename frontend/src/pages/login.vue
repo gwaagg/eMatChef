@@ -18,6 +18,7 @@
         Login
       </button>
     </form>
+    <p v-if="errorMessage" class="text-red-500 mt-2">{{ errorMessage }}</p>
   </div>
 </template>
 
@@ -28,6 +29,7 @@ import { login } from '@/services/auth'
 
 const email = ref('')
 const password = ref('')
+const errorMessage = ref('')
 const router = useRouter()
 
 const doLogin = async () => {
@@ -40,8 +42,10 @@ const doLogin = async () => {
     }
 
     router.push(`/${orgCode}/material`)
+    errorMessage.value = ''
   } catch (err) {
     console.error('Login fehlgeschlagen:', err)
+    errorMessage.value = err.message || 'Login fehlgeschlagen'
   }
 }
 </script>
