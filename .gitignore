@@ -1,0 +1,19 @@
+# Dependency directories
+node_modules/
+**/node_modules/
+vendor/
+**/vendor/
+
+# Environment files
+.env
+
+# Build artifacts
+build/
+dist/
+public/build/
+coverage/
+var/
+
+# Logs
+*.log
+
