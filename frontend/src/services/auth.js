@@ -1,15 +1,19 @@
-// src/services/auth.js
-export const login = async (email, password) => {
-  const res = await fetch(import.meta.env.VITE_API_BASE_URL + '/login', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, password })
-  })
-  const data = await res.json()
-  if (!res.ok) throw new Error('Login failed')
-  localStorage.setItem('jwt', data.token)
+import apiClient from '@/services/apiClient'
+
+export async function login(email, password) {
+  const response = await apiClient.post('/api/login', { email, password })
+  const token = response.data.token
+  localStorage.setItem('token', token)
+  apiClient.defaults.headers.common['Authorization'] = `Bearer ${token}`
+  console.log('Token gespeichert:', token)
 }
 
-export const logout = () => localStorage.removeItem('jwt')
-
-export const isAuthenticated = () => !!localStorage.getItem('jwt')
+export async function fetchUser() {
+  try {
+    const response = await apiClient.get('/api/me')
+    return response.data.user
+  } catch (error) {
+    console.error('Fehler beim Laden des Benutzers:', error)
+    throw new Error('Fehler beim Laden des Benutzers')
+  }
+}
