@@ -3,10 +3,10 @@
     <router-link
   v-for="item in navItems"
   :key="item.label"
-  :to="item.route"
+  :to="{ name: item.name, params: { orgCode } }"
   class="nav-button"
-  :class="isActive(item.route) ? 'nav-active' : 'nav-inactive'"
-  @click="console.log('Klicke auf:', item.route)"
+  :class="isActive(item) ? 'nav-active' : 'nav-inactive'"
+  @click="console.log('Klicke auf:', item.name)"
 >
       <component :is="item.icon" class="nav-icon" />
       <span class="nav-label">{{ item.label }}</span>
@@ -31,14 +31,15 @@ import {
 } from 'lucide-vue-next'
 
 const route = useRoute()
+const orgCode = route.params.orgCode
 const emit = defineEmits(['open-more'])
 
 const navItems = [
-  { icon: HomeIcon, label: 'Material', route: '/material' },
-  { icon: SearchIcon, label: 'Bestellung', route: '/bestellung' },
-  { icon: PlusCircleIcon, label: 'Neu', route: '/neu' },
-  { icon: BellIcon, label: 'Reparatur', route: '/reparatur' },
+  { icon: HomeIcon, label: 'Material', name: 'material' },
+  { icon: SearchIcon, label: 'Bestellung', name: 'bestellung' },
+  { icon: PlusCircleIcon, label: 'Neu', name: 'neu' },
+  { icon: BellIcon, label: 'Reparatur', name: 'reparatur' },
 ]
 
-const isActive = (r) => route.path.startsWith(r)
+const isActive = (item) => route.name === item.name
 </script>

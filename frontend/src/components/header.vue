@@ -6,7 +6,7 @@
         <ul class="flex gap-2 h-full">
           <li v-for="item in menuItems" :key="item.label" class="h-full">
             <router-link
-              :to="item.route"
+              :to="{ name: item.name, params: { orgCode } }"
               class="desktop-link h-full flex items-center"
               :class="isActive(item) ? 'desktop-active' : 'desktop-inactive'"
             >
@@ -32,18 +32,19 @@ import { ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
+const orgCode = route.params.orgCode
 const router = useRouter()
 const dropdownOpen = ref(false)
 const username = ref('Max Mustermann')
 
 const menuItems = [
-  { label: 'Material', route: '/material' },
-  { label: 'Bestellung', route: '/bestellung' },
-  { label: 'Buchhaltung', route: '/buchhaltung' },
-  { label: 'Einstellungen', route: '/admin' }
+  { label: 'Material', name: 'material' },
+  { label: 'Bestellung', name: 'bestellung' },
+  { label: 'Buchhaltung', name: 'buchhaltung' },
+  { label: 'Einstellungen', name: 'admin' }
 ]
 
-const isActive = (item) => route.path.startsWith(item.route)
+const isActive = (item) => route.name === item.name
 
 function toggleDropdown() {
   dropdownOpen.value = !dropdownOpen.value
