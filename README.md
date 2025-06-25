@@ -6,4 +6,4 @@ Hauptfunktionen
 - Budget / Amortisation Berechnen
 - Repraturaufträge erstellen
 - Materialverleih / Rechnung Generieren
-Addons
+- Addons können optional aktiviert werden, um zusätzliche Funktionen zu erhalten.
