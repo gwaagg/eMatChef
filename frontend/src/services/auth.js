@@ -1,5 +1,5 @@
 // src/services/auth.js
-import jwtDecode from 'jwt-decode'
+import { jwtDecode } from 'jwt-decode'
 import { getTokenExpiration } from '@/auth'
 
 export const login = async (email, password) => {
