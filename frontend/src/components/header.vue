@@ -1,7 +1,7 @@
 <template>
   <header class="desktop-header">
     <div class="header-left">
-      <router-link to="/" class="logo">Logo</router-link>
+      <router-link :to="logoRoute" class="logo">Logo</router-link>
       <nav class="desktop-nav">
         <ul class="flex gap-2 h-full">
           <li v-for="item in menuItems" :key="item.label" class="h-full">
@@ -20,7 +20,7 @@
     <div class="user-dropdown">
       <button @click="toggleDropdown">{{ username }}</button>
       <div v-if="dropdownOpen" class="dropdown-box">
-        <router-link to="/profil">Profil</router-link>
+        <router-link :to="`/${orgCode}/profil`">Profil</router-link>
         <button @click="logout" class="bg-red-500 px-3 py-1 rounded hover:bg-red-600">Logout</button>
       </div>
     </div>
@@ -28,20 +28,22 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
 const router = useRouter()
 const dropdownOpen = ref(false)
 const username = ref('Max Mustermann')
+const orgCode = computed(() => route.params.orgCode)
+const logoRoute = computed(() => `/${orgCode.value}/material`)
 
-const menuItems = [
-  { label: 'Material', route: '/material' },
-  { label: 'Bestellung', route: '/bestellung' },
-  { label: 'Buchhaltung', route: '/buchhaltung' },
-  { label: 'Einstellungen', route: '/admin' }
-]
+const menuItems = computed(() => [
+  { label: 'Material', route: `/${orgCode.value}/material` },
+  { label: 'Bestellung', route: `/${orgCode.value}/bestellung` },
+  { label: 'Buchhaltung', route: `/${orgCode.value}/buchhaltung` },
+  { label: 'Einstellungen', route: `/${orgCode.value}/admin` }
+])
 
 const isActive = (item) => route.path.startsWith(item.route)
 

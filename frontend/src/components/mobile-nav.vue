@@ -21,6 +21,7 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import {
   HomeIcon,
@@ -32,13 +33,14 @@ import {
 
 const route = useRoute()
 const emit = defineEmits(['open-more'])
+const orgCode = computed(() => route.params.orgCode)
 
-const navItems = [
-  { icon: HomeIcon, label: 'Material', route: '/material' },
-  { icon: SearchIcon, label: 'Bestellung', route: '/bestellung' },
-  { icon: PlusCircleIcon, label: 'Neu', route: '/neu' },
-  { icon: BellIcon, label: 'Reparatur', route: '/reparatur' },
-]
+const navItems = computed(() => [
+  { icon: HomeIcon, label: 'Material', route: `/${orgCode.value}/material` },
+  { icon: SearchIcon, label: 'Bestellung', route: `/${orgCode.value}/bestellung` },
+  { icon: PlusCircleIcon, label: 'Neu', route: `/${orgCode.value}/neu` },
+  { icon: BellIcon, label: 'Reparatur', route: `/${orgCode.value}/reparatur` },
+])
 
 const isActive = (r) => route.path.startsWith(r)
 </script>
