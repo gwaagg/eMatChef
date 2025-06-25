@@ -29,9 +29,10 @@
 
 <script setup>
 import { ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
+const router = useRouter()
 const dropdownOpen = ref(false)
 const username = ref('Max Mustermann')
 
