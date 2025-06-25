@@ -1,6 +1,7 @@
 import apiClient from '@/services/apiClient'
 // src/services/auth.js
 import jwtDecode from 'jwt-decode'
+import { getTokenExpiration } from '@/auth'
 
 export const login = async (email, password) => {
   const res = await fetch(import.meta.env.VITE_API_BASE_URL + '/login', {
@@ -21,4 +22,18 @@ export const login = async (email, password) => {
   // Token direkt auslesen und orgCode extrahieren
   const decoded = jwtDecode(data.token)
   return decoded // enthält u.a. orgCode und orgId
+}
+
+export const isAuthenticated = () => {
+  const token = localStorage.getItem('jwt')
+  if (!token) {
+    return false
+  }
+
+  const exp = getTokenExpiration(token)
+  if (exp && exp < Date.now()) {
+    return false
+  }
+
+  return true
 }
